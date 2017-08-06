@@ -1,0 +1,8 @@
+name: Airbattle
+version: 1.0
+author: FalseHonesty
+main: dev.fh.airbattle.Airbattle
+commands:
+  airbattle:
+    description: Airbattle commands
+    aliases: ab
