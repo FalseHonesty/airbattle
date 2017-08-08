@@ -7,6 +7,7 @@ import dev.fh.airbattle.events.TeamScoreEvent;
 import dev.fh.airbattle.game.Game;
 import dev.fh.airbattle.guns.Gun;
 import dev.fh.airbattle.guns.MachineGun;
+import dev.fh.airbattle.guns.RocketLauncher;
 import dev.fh.airbattle.players.AirbattlePlayer;
 import dev.fh.airbattle.players.PlayerMode;
 import dev.fh.airbattle.util.AirbattleConfig;
@@ -99,7 +100,7 @@ public class PlayState extends Gamestate {
         AirbattlePlayer abPlayer = game.playerManager.getABPlayer(shooter.getUniqueId());
         switch (heldItem.getType()) {
             case STONE_HOE:
-                MachineGun gun = (MachineGun) abPlayer.getSelectedKit().getGunByClass(MachineGun.class);
+                MachineGun gun = abPlayer.getSelectedKit().getGunByClass(MachineGun.class);
 
                 if (gun != null) {
                     gun.onShoot(abPlayer);
@@ -109,19 +110,14 @@ public class PlayState extends Gamestate {
 
                 break;
             case STONE_SPADE:
-                /*if (abPlayer.onCooldown("stoneSpade")) {
-                    abPlayer.playSound(Sound.BLOCK_ANVIL_FALL, 1, 1);
-                } else {
+                RocketLauncher launcher = abPlayer.getSelectedKit().getGunByClass(RocketLauncher.class);
 
+                if (launcher != null) {
+                    launcher.onShoot(abPlayer);
+                }
 
-                    Egg egg = shooter.launchProjectile(Egg.class);
-                    egg.setGravity(false);
-                    egg.setVelocity(egg.getVelocity().multiply(3));
-                    abPlayer.addCooldown("stoneSpade", 20 * 10, gun, true);
-                    abPlayer.playSound(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                damageShotPlayer(shooter, 7);
 
-                    damageShotPlayer(shooter, 7);
-                }*/
                 break;
         }
     }

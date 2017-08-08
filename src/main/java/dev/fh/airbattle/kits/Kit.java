@@ -2,6 +2,7 @@ package dev.fh.airbattle.kits;
 
 import dev.fh.airbattle.guns.Gun;
 import dev.fh.airbattle.guns.MachineGun;
+import dev.fh.airbattle.guns.RocketLauncher;
 import dev.fh.airbattle.util.AirbattleConfig;
 import dev.fh.airbattle.util.ItemBuilder;
 import org.bukkit.ChatColor;
@@ -26,7 +27,7 @@ public enum Kit {
                     .setLore("A soldier is a full-out combat kit", "They are very strong in combat, as they have a large arsenal of weapons",
                             "However, they are not very maneuverable in the sky.", "They are ideal for holding a point").build(),
             ChatColor.RED + "Soldier Kit",
-            new ArrayList<>(Arrays.asList(new MachineGun())));
+            new ArrayList<>(Arrays.asList(new MachineGun(), new RocketLauncher())));
 
     public HashMap<Integer, ItemStack> items;
     public ArrayList<Gun> guns;
@@ -61,7 +62,7 @@ public enum Kit {
         inv.setBoots(boots);
     }
 
-    public Gun getGunByClass(Class<? extends Gun> gunClass) {
+    public <T extends Gun> T getGunByClass(Class<? extends T> gunClass) {
         for (Gun gun : this.guns) {
             if (gun.getClass().equals(gunClass)) {
                 return gunClass.cast(gun);

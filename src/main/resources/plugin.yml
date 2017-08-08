@@ -2,6 +2,7 @@ name: Airbattle
 version: 1.0
 author: FalseHonesty
 main: dev.fh.airbattle.Airbattle
+depend: [ParticleLIB]
 commands:
   airbattle:
     description: Airbattle commands
