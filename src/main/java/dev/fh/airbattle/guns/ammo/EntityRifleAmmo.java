@@ -52,6 +52,10 @@ public class EntityRifleAmmo extends EntityArrow {
     }
 
     public void launch(Player player) {
-        this.a(((CraftPlayer) player).getHandle(), player.getLocation().getPitch(), player.getLocation().getYaw(), 0f, 3f, 1f);
+        Location eyeLoc = player.getEyeLocation();
+        this.setPosition(eyeLoc.getX(), eyeLoc.getY(), eyeLoc.getZ());
+        this.yaw = eyeLoc.getYaw();
+        this.pitch = eyeLoc.getPitch();
+        this.a(((CraftPlayer) player).getHandle(), this.yaw, this.pitch, 0f, 3.0f, 1.0f);
     }
 }
