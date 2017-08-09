@@ -14,11 +14,13 @@ public class CaptureManager {
     private ArrayList<CapturePoint> capturePoints;
     private BukkitTask onTickTask;
     private Game game;
+    private int ticksElapsed;
 
     public CaptureManager(Game game) {
         this.capturePoints = AirbattleConfig.capturePoints;
         this.onTickTask = Bukkit.getScheduler().runTaskTimer(Airbattle.plugin, this::onTick, 0, 1);
         this.game = game;
+        this.ticksElapsed = 0;
     }
 
     public void cancelTick() {
@@ -26,6 +28,8 @@ public class CaptureManager {
     }
 
     private void onTick() {
+        ticksElapsed++;
+
         for (CapturePoint cp : capturePoints) {
             if (cp == null) {
                 System.out.println("cp == null?");
@@ -53,7 +57,13 @@ public class CaptureManager {
             if (playersInRange.size() > 0) cp.capturing(redTeamPlayers, blueTeamPlayers);
             else cp.noneCapturing();
 
-            cp.calculatePoints();
+            if (ticksElapsed % 5 == 0) {
+                cp.calculatePoints();
+            }
+        }
+
+        if (ticksElapsed % 5 == 0) {
+            ticksElapsed = 0;
         }
     }
 }

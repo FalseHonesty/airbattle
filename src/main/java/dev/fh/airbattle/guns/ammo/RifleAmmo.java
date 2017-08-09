@@ -21,6 +21,7 @@ public class RifleAmmo implements Listener {
     public RifleAmmo(Player shooter) {
         arrow = shooter.launchProjectile(Arrow.class);
         arrow.setGravity(false);
+        arrow.setVelocity(arrow.getVelocity().clone().multiply(1.5));
         Bukkit.getPluginManager().registerEvents(this, Airbattle.plugin);
 
         ticksElapsed = 0;

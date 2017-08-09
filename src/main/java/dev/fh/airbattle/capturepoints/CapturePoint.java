@@ -22,6 +22,11 @@ public class CapturePoint implements ConfigurationSerializable {
     private final Integer pointsPerTick;
     private Integer redCapturePercentage;
     private Integer blueCapturePercentage;
+    private int ticks;
+
+    static {
+        AirbattleConfig.loadConfig(Airbattle.plugin.getConfig());
+    }
 
     public CapturePoint(Location location) {
         this.location = location;
@@ -96,7 +101,6 @@ public class CapturePoint implements ConfigurationSerializable {
 
         } else {
             int difference = blue - red;
-            System.out.println("cpt: " + capturePerTick);
             int additive = capturePerTick * difference;
 
             if (redCapturePercentage > 0) {

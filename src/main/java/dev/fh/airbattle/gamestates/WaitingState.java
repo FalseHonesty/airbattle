@@ -49,6 +49,10 @@ public class WaitingState extends Gamestate {
         kitMenu.registerKit(Kit.SOLDIERKIT.symbol, Kit.SOLDIERKIT, "soldier");
 
         NMSHelper.setMOTD(ChatColor.GREEN + "Airbattle " + ChatColor.WHITE + "- " + ChatColor.YELLOW + "Waiting");
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            initPlayer(p);
+        }
     }
 
     public void onStop() {
@@ -66,11 +70,16 @@ public class WaitingState extends Gamestate {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(ChatColor.GREEN + e.getPlayer().getName() + " has joined.");
-        e.getPlayer().getInventory().clear();
-        playerManager.onPlayerJoin(e);
-        e.getPlayer().setHealth(20);
-        e.getPlayer().setFoodLevel(20);
-        e.getPlayer().teleport(AirbattleConfig.lobbyLoc);
+
+        initPlayer(e.getPlayer());
+    }
+
+    private void initPlayer(Player p) {
+        p.getInventory().clear();
+        playerManager.onPlayerJoin(p);
+        p.setHealth(20);
+        p.setFoodLevel(20);
+        p.teleport(AirbattleConfig.lobbyLoc);
 
         if (Bukkit.getOnlinePlayers().size() >= AirbattleConfig.minPlayers) {
             if (countdown < 0) {

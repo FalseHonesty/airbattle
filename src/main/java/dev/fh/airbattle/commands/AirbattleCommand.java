@@ -27,20 +27,28 @@ public class AirbattleCommand implements CommandExecutor {
 
         Player p = ((Player) commandSender);
 
-        if (strings[0] == null) {
+        if (strings.length == 0) {
             p.sendMessage(ChatColor.RED + "Please specify a command! (reload, cp, forcestart, setloc)");
             return true;
         }
 
         if (strings[0].equalsIgnoreCase("reload")) {
             AirbattleConfig.loadConfig(Airbattle.plugin.getConfig());
-            Airbattle.plugin.currentGame.endGame();
+
+            if (Airbattle.plugin.currentGame != null) {
+                Airbattle.plugin.currentGame.endGame();
+            }
+
             Airbattle.plugin.currentGame = new Game();
             Airbattle.plugin.currentGame.startGame();
         }
 
         if (strings[0].equalsIgnoreCase("cp")) {
             Block lookingAt = p.getTargetBlock((Set<Material>) null, 30);
+
+            if (strings.length == 1) {
+                p.sendMessage("Please choose from [add, remove, list]");
+            }
 
             switch (strings[1]) {
                 case "add":

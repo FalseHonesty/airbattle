@@ -23,6 +23,7 @@ public class RocketAmmo implements Listener {
     public RocketAmmo(Player shooter) {
         egg = shooter.launchProjectile(Egg.class);
         egg.setGravity(false);
+        egg.setVelocity(egg.getVelocity().multiply(2));
 
         Bukkit.getPluginManager().registerEvents(this, Airbattle.plugin);
 

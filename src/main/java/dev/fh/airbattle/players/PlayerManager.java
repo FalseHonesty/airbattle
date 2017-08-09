@@ -20,8 +20,7 @@ public class PlayerManager {
         playerMap = new HashMap<>();
     }
 
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
+    public void onPlayerJoin(Player p) {
 
         Team teamToJoin = Bukkit.getOnlinePlayers().size() % 2 == 0 ? Team.BLUE : Team.RED;
 

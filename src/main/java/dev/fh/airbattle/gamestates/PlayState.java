@@ -10,6 +10,7 @@ import dev.fh.airbattle.guns.MachineGun;
 import dev.fh.airbattle.guns.RocketLauncher;
 import dev.fh.airbattle.players.AirbattlePlayer;
 import dev.fh.airbattle.players.PlayerMode;
+import dev.fh.airbattle.scoreboard.ScoreboardManager;
 import dev.fh.airbattle.util.AirbattleConfig;
 import dev.fh.airbattle.util.NMSHelper;
 import org.bukkit.Bukkit;
@@ -39,7 +40,7 @@ import java.util.Arrays;
 public class PlayState extends Gamestate {
     private Game game;
     private CaptureManager captureManager;
-    private Scoreboard displayedScoreboard;
+    private ScoreboardManager scoreboardManager;
 
     public void onStart(Game game) {
         this.game = game;
@@ -61,6 +62,8 @@ public class PlayState extends Gamestate {
         }
 
         captureManager = new CaptureManager(game);
+        scoreboardManager = new ScoreboardManager();
+
         NMSHelper.setMOTD(ChatColor.GREEN + "Airbattle - " + ChatColor.YELLOW + "In game");
     }
 
@@ -74,6 +77,8 @@ public class PlayState extends Gamestate {
             p.setCustomNameVisible(false);
             p.setDisplayName(p.getName());
         }
+
+        scoreboardManager.finish();
     }
 
     @EventHandler
@@ -189,28 +194,6 @@ public class PlayState extends Gamestate {
     public void onGameEnd(GameWinEvent e) {
         Bukkit.broadcastMessage(ChatColor.WHITE + "Team " + e.getWinner().color + e.getWinner().name + ChatColor.GOLD + " has won the game!");
         game.endGame();
-    }
-
-    @EventHandler
-    public void onTeamScore(TeamScoreEvent e) {
-        Objective obj = displayedScoreboard.getObjective("scores");
-
-        if (e.getScorer().name.equals("red")) {
-            obj.getScore(ChatColor.RED + "Red: ").setScore(e.getScorer().points);
-        } else {
-            obj.getScore(ChatColor.BLUE + "Blue: ").setScore(e.getScorer().points);
-        }
-    }
-
-    private void initScoreboard() {
-        displayedScoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-        Objective obj = displayedScoreboard.registerNewObjective("scores", "dummy");
-        obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName(ChatColor.BLUE + "" + ChatColor.BOLD + "Airbattle");
-
-        obj.getScore(" ").setScore(AirbattleConfig.winCondition + 1);
-        obj.getScore(ChatColor.RED + "Red: ").setScore(0);
-        obj.getScore(ChatColor.BLUE + "Blue: ").setScore(0);
     }
 
     private void damageShotPlayer(Player shooter, int damage) {
