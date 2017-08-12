@@ -11,6 +11,7 @@ import dev.fh.airbattle.guns.RocketLauncher;
 import dev.fh.airbattle.players.AirbattlePlayer;
 import dev.fh.airbattle.players.PlayerMode;
 import dev.fh.airbattle.scoreboard.ScoreboardManager;
+import dev.fh.airbattle.teams.Team;
 import dev.fh.airbattle.util.AirbattleConfig;
 import dev.fh.airbattle.util.NMSHelper;
 import org.bukkit.Bukkit;
@@ -38,13 +39,17 @@ import org.bukkit.scoreboard.Scoreboard;
 import java.util.Arrays;
 
 public class PlayState extends Gamestate {
+
+    static {
+        gamestateType = Gamestates.PLAYING;
+    }
+
     private Game game;
     private CaptureManager captureManager;
     private ScoreboardManager scoreboardManager;
 
     public void onStart(Game game) {
         this.game = game;
-        this.gamestateType = Gamestates.PLAYING;
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             AirbattlePlayer abPlayer = game.playerManager.getABPlayer(p.getUniqueId());
@@ -79,6 +84,13 @@ public class PlayState extends Gamestate {
         }
 
         scoreboardManager.finish();
+    }
+
+    @EventHandler
+    public void onGameWin(GameWinEvent e) {
+        Bukkit.broadcastMessage(e.getWinner().color + e.getWinner().name + ChatColor.WHITE + " has won the game!");
+
+        this.game.getGamestateManager().changeGamestate(new FinishState(e.getWinner()));
     }
 
     @EventHandler

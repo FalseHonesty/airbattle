@@ -23,6 +23,6 @@ public class Game {
     }
 
     public void endGame() {
-        gamestateManager.changeGamestate(new FinishState());
+        gamestateManager.changeGamestate(new FinishState(null));
     }
 }

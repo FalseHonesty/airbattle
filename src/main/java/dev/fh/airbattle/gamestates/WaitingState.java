@@ -29,6 +29,11 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class WaitingState extends Gamestate {
+
+    static {
+        gamestateType = Gamestates.WAITING;
+    }
+
     @Getter
     private PlayerManager playerManager;
     private KitMenu kitMenu;
@@ -39,7 +44,6 @@ public class WaitingState extends Gamestate {
 
     public void onStart(Game game) {
         this.game = game;
-        this.gamestateType = Gamestates.WAITING;
 
         kitMenu = new KitMenu(this);
         teamMenu = new TeamMenu(this);

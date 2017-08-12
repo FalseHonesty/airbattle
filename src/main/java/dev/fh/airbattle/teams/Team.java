@@ -73,4 +73,15 @@ public enum Team {
             Bukkit.getPluginManager().callEvent(gameWinEvent);
         }
     }
+
+    public void gameEnd() {
+        this.points = 0;
+        this.players.clear();
+
+        for (String entry : this.team.getEntries()) {
+            this.team.removeEntry(entry);
+        }
+
+        this.team.unregister();
+    }
 }

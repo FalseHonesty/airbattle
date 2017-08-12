@@ -16,7 +16,8 @@ import java.util.HashMap;
 
 public class ScoreboardManager implements Listener {
     private Scoreboard scoreboard;
-    private Objective objective;
+    private Objective sidebar;
+    private Objective healthDisplay;
     private HashMap<String, Score> scores;
     private final String REDSCORE = ChatColor.RED + "Red Score " + ChatColor.GREEN;
     private final String BLUESCORE = ChatColor.BLUE + "Blue Score " + ChatColor.GREEN;
@@ -24,11 +25,14 @@ public class ScoreboardManager implements Listener {
     public ScoreboardManager() {
         Bukkit.getPluginManager().registerEvents(this, Airbattle.plugin);
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        objective = scoreboard.registerNewObjective("scoreboard", "dummy");
+        sidebar = scoreboard.registerNewObjective("scoreboard", "dummy");
+
+        healthDisplay = scoreboard.registerNewObjective("healthDisplay", "health");
+        healthDisplay.setDisplaySlot(DisplaySlot.BELOW_NAME);
 
         scoreboard.clearSlot(DisplaySlot.SIDEBAR);
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Airbattle");
+        sidebar.setDisplaySlot(DisplaySlot.SIDEBAR);
+        sidebar.setDisplayName(ChatColor.AQUA.toString() + ChatColor.BOLD + "Airbattle");
 
         scores = new HashMap<>();
 
@@ -42,7 +46,7 @@ public class ScoreboardManager implements Listener {
     }
 
     private void addScore(String name, String key, int value) {
-        Score score = objective.getScore(name);
+        Score score = sidebar.getScore(name);
         score.setScore(value);
 
         if (scores.containsKey(key)) {
@@ -54,6 +58,10 @@ public class ScoreboardManager implements Listener {
 
     @EventHandler
     public void onTeamScore(TeamScoreEvent e) {
+        if (e.isCancelled()) {
+            return;
+        }
+
         scoreboard.resetScores(scores.get(e.getScorer().name + "score").getEntry());
 
         if (e.getScorer().name.equalsIgnoreCase("red")) {
@@ -65,7 +73,9 @@ public class ScoreboardManager implements Listener {
     }
 
     public void finish() {
-        objective.unregister();
+        sidebar.unregister();
+        healthDisplay.unregister();
         scoreboard.clearSlot(DisplaySlot.SIDEBAR);
+        scoreboard.clearSlot(DisplaySlot.BELOW_NAME);
     }
 }
