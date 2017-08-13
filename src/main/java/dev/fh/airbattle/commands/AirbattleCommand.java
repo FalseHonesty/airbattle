@@ -102,6 +102,11 @@ public class AirbattleCommand implements CommandExecutor {
                     AirbattleConfig.setConfigOption("blueTeamLoc", p.getLocation());
                     AirbattleConfig.blueTeamLoc = p.getLocation();
                     break;
+                case "spectator":
+                case "spec":
+                    AirbattleConfig.setConfigOption("spectatorLoc", p.getLocation());
+                    AirbattleConfig.spectatorLoc = p.getLocation();
+                    break;
             }
         }
         return true;

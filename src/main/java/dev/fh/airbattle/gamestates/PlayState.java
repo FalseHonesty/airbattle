@@ -10,6 +10,7 @@ import dev.fh.airbattle.guns.MachineGun;
 import dev.fh.airbattle.guns.RocketLauncher;
 import dev.fh.airbattle.players.AirbattlePlayer;
 import dev.fh.airbattle.players.PlayerMode;
+import dev.fh.airbattle.respawn.RespawnManager;
 import dev.fh.airbattle.scoreboard.ScoreboardManager;
 import dev.fh.airbattle.teams.Team;
 import dev.fh.airbattle.util.AirbattleConfig;
@@ -24,10 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -47,6 +45,7 @@ public class PlayState extends Gamestate {
     private Game game;
     private CaptureManager captureManager;
     private ScoreboardManager scoreboardManager;
+    private RespawnManager respawnManager;
 
     public void onStart(Game game) {
         this.game = game;
@@ -68,6 +67,7 @@ public class PlayState extends Gamestate {
 
         captureManager = new CaptureManager(game);
         scoreboardManager = new ScoreboardManager();
+        respawnManager = new RespawnManager();
 
         NMSHelper.setMOTD(ChatColor.GREEN + "Airbattle - " + ChatColor.YELLOW + "In game");
     }
@@ -162,6 +162,10 @@ public class PlayState extends Gamestate {
     public void onDamage(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Projectile) {
             e.setCancelled(true);
+        }
+
+        if (e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
+            System.out.println("custom");
         }
     }
 

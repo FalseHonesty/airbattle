@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class AirbattleConfig {
     public static String defaultKit;
@@ -22,10 +23,12 @@ public class AirbattleConfig {
     public static Location lobbyLoc;
     public static Location blueTeamLoc;
     public static Location redTeamLoc;
+    public static Location spectatorLoc;
     public static Integer capturePerTick;
     public static Boolean pluginEnabled;
     public static Integer pointsPerTick;
     public static HashMap<Integer, ItemStack> soldierItems;
+    public static Integer respawnTimer;
 
     static {
         soldierItems = new HashMap<>();
@@ -35,6 +38,7 @@ public class AirbattleConfig {
 
     public static HashMap<String, Object> getConfigDefaults() {
         HashMap<String, Object> configDefaults = new HashMap<>();
+
         configDefaults.put("defaultKit", "SOLDIERKIT");
         configDefaults.put("capturePoints", new ArrayList<>());
         configDefaults.put("capturePointRange", 5);
@@ -45,9 +49,11 @@ public class AirbattleConfig {
         configDefaults.put("lobbyLoc", new Location(Bukkit.getWorld("world"), 0, 60, 0));
         configDefaults.put("blueTeamLoc", new Location(Bukkit.getWorld("world"), 0, 60, 0));
         configDefaults.put("redTeamLoc", new Location(Bukkit.getWorld("world"), 0, 60, 0));
+        configDefaults.put("spectatorLoc", new Location(Bukkit.getWorld("world"), 0, 60, 0));
         configDefaults.put("capturePerTick", 1);
         configDefaults.put("pluginEnabled", true);
         configDefaults.put("pointsPerTick", 1);
+        configDefaults.put("respawnTimer", 10);
 
         return configDefaults;
     }
@@ -113,6 +119,12 @@ public class AirbattleConfig {
             blueTeamLoc = (Location) getConfigDefaults().get("blueTeamLoc");
         }
 
+        if (conf.get("spectatorLoc") != null) {
+            spectatorLoc = (Location) conf.get("spectatorLoc");
+        } else {
+            spectatorLoc = (Location) getConfigDefaults().get("spectatorLoc");
+        }
+
         if (conf.get("capturePerTick") != null) {
             capturePerTick = conf.getInt("capturePerTick");
         } else {
@@ -129,6 +141,12 @@ public class AirbattleConfig {
             pointsPerTick = conf.getInt("pointsPerTick");
         } else {
             pointsPerTick = (Integer) getConfigDefaults().get("pointsPerTick");
+        }
+
+        if (conf.get("respawnTimer") != null) {
+            respawnTimer = conf.getInt("respawnTimer");
+        } else {
+            respawnTimer = (Integer) getConfigDefaults().get("respawnTimer");
         }
     }
 
