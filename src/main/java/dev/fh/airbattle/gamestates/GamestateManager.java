@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 
 public class GamestateManager {
     public Gamestate currentGamestate;
-    public Gamestates currentGamestateType;
 
     public void changeGamestate(Gamestate gamestate) {
         if (currentGamestate != null) {
@@ -17,6 +16,5 @@ public class GamestateManager {
         currentGamestate = gamestate;
         currentGamestate.onStart(Airbattle.plugin.currentGame);
         Bukkit.getPluginManager().registerEvents(currentGamestate, Airbattle.plugin);
-        currentGamestateType = gamestate.gamestateType;
     }
 }

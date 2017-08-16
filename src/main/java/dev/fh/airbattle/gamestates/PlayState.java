@@ -38,10 +38,6 @@ import java.util.Arrays;
 
 public class PlayState extends Gamestate {
 
-    static {
-        gamestateType = Gamestates.PLAYING;
-    }
-
     private Game game;
     private CaptureManager captureManager;
     private ScoreboardManager scoreboardManager;
@@ -84,6 +80,11 @@ public class PlayState extends Gamestate {
         }
 
         scoreboardManager.finish();
+    }
+
+    @Override
+    public Gamestates getGamestateType() {
+        return Gamestates.PLAYING;
     }
 
     @EventHandler

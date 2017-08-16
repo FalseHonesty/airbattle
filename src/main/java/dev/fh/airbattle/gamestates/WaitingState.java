@@ -30,10 +30,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class WaitingState extends Gamestate {
 
-    static {
-        gamestateType = Gamestates.WAITING;
-    }
-
     @Getter
     private PlayerManager playerManager;
     private KitMenu kitMenu;
@@ -69,6 +65,11 @@ public class WaitingState extends Gamestate {
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.getInventory().clear();
         }
+    }
+
+    @Override
+    public Gamestates getGamestateType() {
+        return Gamestates.WAITING;
     }
 
     @EventHandler

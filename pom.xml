@@ -13,13 +13,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>inventive-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <!--Spigot API-->
         <dependency>
@@ -34,29 +27,6 @@
             <artifactId>spigot</artifactId>
             <version>1.12-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!--Bukkit API-->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!--Craftbukkit-->
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.12-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!--Particle Lib-->
-        <dependency>
-            <groupId>org.inventivetalent</groupId>
-            <artifactId>particleapi</artifactId>
-            <version>2.1.1</version>
         </dependency>
 
         <!--Lombok Utility-->

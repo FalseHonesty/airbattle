@@ -8,10 +8,6 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class FinishState extends Gamestate {
 
-    static {
-        gamestateType = Gamestates.FINSISHING;
-    }
-
     private BukkitTask celebrateTask;
     private Team winner;
 
@@ -42,5 +38,10 @@ public class FinishState extends Gamestate {
 
         Team.BLUE.gameEnd();
         Team.RED.gameEnd();
+    }
+
+    @Override
+    public Gamestates getGamestateType() {
+        return Gamestates.FINISHING;
     }
 }

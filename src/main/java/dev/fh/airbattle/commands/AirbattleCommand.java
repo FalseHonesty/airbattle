@@ -82,7 +82,8 @@ public class AirbattleCommand implements CommandExecutor {
         }
 
         if (strings[0].equalsIgnoreCase("forcestart")
-                && Airbattle.plugin.currentGame.getGamestateManager().currentGamestate.gamestateType == Gamestates.WAITING) {
+                && Airbattle.plugin.currentGame.getGamestateManager().currentGamestate.getGamestateType() == Gamestates.WAITING) {
+            System.out.println("Forcestarting game...");
             Airbattle.plugin.currentGame.getGamestateManager().changeGamestate(new PlayState());
         }
 
